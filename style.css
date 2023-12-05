@@ -1,0 +1,33 @@
+#form {
+  display: none;
+}
+
+#listStudents {
+  display: none;
+}
+
+#listStudents h1 {
+  text-align: center;
+}
+
+#tableStudents {
+  text-align: center;
+}
+
+table {
+  width: 100%;
+}
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.studentIdUpdateButton {
+  width: 60px;
+}
+
+#buttonUpdateStudent {
+  display: none;
+}

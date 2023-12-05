@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- A button to open the form -->
+
+    <button type="button" onclick="addStudent()">Add student</button>
+    <button type="button" onclick="listStudents()">List students</button>
+    <br />
+
+    <!-- <button type="button" onclick="updateStudent()">Update student</button> -->
+
+    <!-- The form -->
+
+    <div id="form">
+      <h1>Student</h1>
+      <form>
+        <label for="studentId">StudentId:</label>
+        <input type="number" name="studentId" id="studentId" />
+        <br /><br />
+
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" />
+        <br /><br />
+
+        <label for="lastName">Last name:</label>
+        <input type="text" name="lastName" id="lastName" />
+        <br /><br />
+
+        <label for="score">Score:</label>
+        <input type="number" name="score" id="score" min="0" max="5.0" />
+        <br /><br />
+
+        <button type="button" onclick="addStudentForm()" id="buttonAddStudent">
+          Submit
+        </button>
+        <button
+          type="button"
+          onclick="updateStudent()"
+          id="buttonUpdateStudent"
+        >
+          Update
+        </button>
+      </form>
+    </div>
+
+    <div id="listStudents">
+      <h1>List Students</h1>
+      <table id="tableStudents">
+        <tr>
+          <th>Id</th>
+          <th>StudentId</th>
+          <th>Name</th>
+          <th>LastName</th>
+          <th>Score</th>
+        </tr>
+      </table>
+      <br /><br />
+      <label for="studentId">Id:</label>
+      <input
+        type="number"
+        name="studentId"
+        id="studentIdUpdate"
+        class="studentIdUpdateButton"
+      />
+      <button type="button" class="updateButton" onclick="updateStudentForm()">
+        update student
+      </button>
+    </div>
+  </body>
+</html>
