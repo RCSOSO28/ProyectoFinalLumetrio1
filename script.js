@@ -2,6 +2,8 @@ let students = [];
 let alumno = {};
 let studentsId = 1;
 let indexAux;
+let contador = 0;
+
 function addStudent() {
   closeAddStudent();
   closeListStudents();
@@ -16,17 +18,23 @@ function listStudents() {
   closeListStudents();
   document.getElementById("listStudents").style.display = "block";
   document.getElementById("form").style.display = "none";
+  renderDataInTable(students);
 }
 
-function renderDataInTable(student) {
-  let mytable = document.getElementById("tableStudents");
-  let newRow = document.createElement("tr");
-  Object.values(student).forEach((value) => {
-    let cell = document.createElement("td");
-    cell.innerText = value;
-    newRow.appendChild(cell);
+function renderDataInTable(students) {
+
+  let mytable = document.getElementById("bodyTableStudents");
+  mytable.innerHTML = '';
+
+  students.forEach((student) => {
+    let newRow = document.createElement("tr");
+    Object.values(student).forEach((value) =>{
+      let cell = document.createElement("td");
+      cell.innerText = value;
+      newRow.appendChild(cell);
+    });
+    mytable.appendChild(newRow);
   });
-  mytable.appendChild(newRow);
 }
 
 function updateStudentForm() {
@@ -96,8 +104,8 @@ function addStudentForm() {
         score: document.getElementById("score").value,
       };
       students.push(student);
-      renderDataInTable(student);
       closeAddStudent();
+      listStudents();
       return;
     } else {
       alert("The student with this document is already registered");
@@ -107,12 +115,10 @@ function addStudentForm() {
 }
 
 function updateStudent() {
-    console.log(indexAux    )
-    console.log(students[indexAux])
-    students[indexAux].studentId = document.getElementById("studentId").value;
-    students[indexAux].name = document.getElementById("name").value;
-    students[indexAux].lastName = document.getElementById("lastName").value;
-    students[indexAux].score = document.getElementById("score").value;
-    closeAddStudent();
-    console.log(students[indexAux]);
+  students[indexAux].studentId = document.getElementById("studentId").value;
+  students[indexAux].name = document.getElementById("name").value;
+  students[indexAux].lastName = document.getElementById("lastName").value;
+  students[indexAux].score = document.getElementById("score").value;
+  closeAddStudent();
+  listStudents();
 }
