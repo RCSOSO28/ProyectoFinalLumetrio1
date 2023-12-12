@@ -3,6 +3,7 @@ let alumno = {};
 let studentsId = 1;
 let indexAux;
 let contador = 0;
+let validacionAux;
 
 function addStudent() {
   closeAddStudent();
@@ -71,54 +72,77 @@ function closeListStudents() {
   document.getElementById("studentIdUpdate").value = "";
 }
 function addStudentForm() {
-  if (document.getElementById("studentId").value === "") {
-    alert("The studentId value must not be null");
+  validacionAux = validarData();
+  if (!validacionAux){
     return;
-  } else if (document.getElementById("name").value === "") {
-    alert("The name value must not be null");
-    return;
-  } else if (document.getElementById("lastName").value === "") {
-    alert("The last name value must not be null");
-    return;
-  } else if (
-    document.getElementById("score").value < 0.0 &&
-    document.getElementById("score").value > 5.0
-  ) {
-    alert("The score value must be between 0.0 and 5.0");
-    return;
-  } else {
-    let index = students.findIndex(
-      (student) =>
-        student.studentId == document.getElementById("studentId").value
-    );
+  }
+  let index = students.findIndex(
+    (student) =>
+      student.studentId == document.getElementById("studentId").value
+  );
 
-    if (
-      students[index] === undefined ||
-      students[index].studentId !== document.getElementById("studentId").value
-    ) {
-      let student = {
-        id: studentsId++,
-        studentId: document.getElementById("studentId").value,
-        name: document.getElementById("name").value,
-        lastName: document.getElementById("lastName").value,
-        score: document.getElementById("score").value,
-      };
-      students.push(student);
-      closeAddStudent();
-      listStudents();
-      return;
-    } else {
-      alert("The student with this document is already registered");
-      return;
-    }
+  if (
+    students[index] === undefined ||
+    students[index].studentId !== document.getElementById("studentId").value
+  ) {
+    let student = {
+      id: studentsId++,
+      studentId: document.getElementById("studentId").value,
+      name: document.getElementById("name").value,
+      lastName: document.getElementById("lastName").value,
+      score: document.getElementById("score").value,
+    };
+    students.push(student);
+    closeAddStudent();
+    listStudents();
+  } else {
+    alert("The student with this document is already registered");
   }
 }
 
 function updateStudent() {
+  validacionAux = validarData();
+  if (!validacionAux){
+    return;
+  }
   students[indexAux].studentId = document.getElementById("studentId").value;
   students[indexAux].name = document.getElementById("name").value;
   students[indexAux].lastName = document.getElementById("lastName").value;
   students[indexAux].score = document.getElementById("score").value;
   closeAddStudent();
   listStudents();
+}
+
+function deleteStudentList(){
+  let index = students.findIndex(
+    (student) => student.id == document.getElementById("studentIdUpdate").value
+  );
+  if (students[index] !== undefined) {
+    students.splice(index,1);
+    listStudents();
+  } else {
+    alert("The student with that id doesn't exist");
+    document.getElementById("studentIdUpdate").value = "";
+  }
+}
+
+function validarData(){
+  if (document.getElementById("studentId").value === "") {
+    alert("The studentId value must not be null");
+    return false;
+  } else if (document.getElementById("name").value === "") {
+    alert("The name value must not be null");
+    return false;
+  } else if (document.getElementById("lastName").value === "") {
+    alert("The last name value must not be null");
+    return false;
+  } else if (
+    document.getElementById("score").value < 0.0 ||
+    document.getElementById("score").value > 5.0 ||
+    document.getElementById("score").value === "" 
+  ) {
+    alert("The score value must be between 0.0 and 5.0");
+    return false;
+  }  
+  return true;
 }
