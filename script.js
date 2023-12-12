@@ -23,19 +23,16 @@ function listStudents() {
 }
 
 function renderDataInTable(students) {
-
-  let mytable = document.getElementById("bodyTableStudents");
-  mytable.innerHTML = '';
-
-  students.forEach((student) => {
-    let newRow = document.createElement("tr");
-    Object.values(student).forEach((value) =>{
-      let cell = document.createElement("td");
-      cell.innerText = value;
-      newRow.appendChild(cell);
-    });
-    mytable.appendChild(newRow);
-  });
+  let sortedStudents = {};
+  if (document.getElementById("optionSelect").value === "Student ID DESC") {
+    sortedStudents = students.sort(
+      (student1, student2) => (student1.studentId < student2.studentId) ? 1 : (student1.studentId > student2.studentId) ? -1 : 0);
+      data(sortedStudents);
+  } else if (document.getElementById("optionSelect").value === "Student ID ASC"){
+    sortedStudents = students.sort(
+      (student1, student2) => (student1.studentId < student2.studentId) ? -1 : (student1.studentId > student2.studentId) ? 1 : 0);
+      data(sortedStudents);
+  }
 }
 
 function updateStudentForm() {
@@ -70,26 +67,29 @@ function closeAddStudent() {
 function closeListStudents() {
   document.getElementById("form").style.display = "none";
   document.getElementById("studentIdUpdate").value = "";
+  document.getElementById("optionOrder");
 }
 function addStudentForm() {
   validacionAux = validarData();
-  if (!validacionAux){
+  if (!validacionAux) {
     return;
   }
   let index = students.findIndex(
-    (student) =>
-      student.studentId == document.getElementById("studentId").value
+    (student) => student.studentId == document.getElementById("studentId").value
   );
 
   if (
     students[index] === undefined ||
     students[index].studentId !== document.getElementById("studentId").value
   ) {
+    if (document.getElementById("score").value > 4.96) {
+      document.getElementById("score").value = 5;
+    }
     let student = {
       id: studentsId++,
       studentId: document.getElementById("studentId").value,
-      name: document.getElementById("name").value,
-      lastName: document.getElementById("lastName").value,
+      name: document.getElementById("name").value.toUpperCase(),
+      lastName: document.getElementById("lastName").value.toUpperCase(),
       score: document.getElementById("score").value,
     };
     students.push(student);
@@ -102,23 +102,28 @@ function addStudentForm() {
 
 function updateStudent() {
   validacionAux = validarData();
-  if (!validacionAux){
+  if (!validacionAux) {
     return;
   }
+  if (document.getElementById("score").value > 4.96) {
+    document.getElementById("score").value = 5;
+  }
   students[indexAux].studentId = document.getElementById("studentId").value;
-  students[indexAux].name = document.getElementById("name").value;
-  students[indexAux].lastName = document.getElementById("lastName").value;
+  students[indexAux].name = document.getElementById("name").value.toUpperCase();
+  students[indexAux].lastName = document
+    .getElementById("lastName")
+    .value.toUpperCase();
   students[indexAux].score = document.getElementById("score").value;
   closeAddStudent();
   listStudents();
 }
 
-function deleteStudentList(){
+function deleteStudentList() {
   let index = students.findIndex(
     (student) => student.id == document.getElementById("studentIdUpdate").value
   );
   if (students[index] !== undefined) {
-    students.splice(index,1);
+    students.splice(index, 1);
     listStudents();
   } else {
     alert("The student with that id doesn't exist");
@@ -126,7 +131,7 @@ function deleteStudentList(){
   }
 }
 
-function validarData(){
+function validarData() {
   if (document.getElementById("studentId").value === "") {
     alert("The studentId value must not be null");
     return false;
@@ -139,10 +144,28 @@ function validarData(){
   } else if (
     document.getElementById("score").value < 0.0 ||
     document.getElementById("score").value > 5.0 ||
-    document.getElementById("score").value === "" 
+    document.getElementById("score").value === ""
   ) {
     alert("The score value must be between 0.0 and 5.0");
     return false;
-  }  
+  }
   return true;
+}
+
+function sortBy() {
+  renderDataInTable(students);
+}
+
+function data(sortedStudents){
+  let mytable = document.getElementById("bodyTableStudents");
+  mytable.innerHTML = "";
+  sortedStudents.forEach((student) => {
+    let newRow = document.createElement("tr");
+    Object.values(student).forEach((value) => {
+      let cell = document.createElement("td");
+      cell.innerText = value;
+      newRow.appendChild(cell);
+    });
+    mytable.appendChild(newRow);
+  });
 }

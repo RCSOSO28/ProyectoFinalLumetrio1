@@ -34,7 +34,7 @@
         <br /><br />
 
         <label for="score">Score:</label>
-        <input type="number" name="score" id="score" min="0" max="5.0" />
+        <input type="number" name="score" id="score" />
         <br /><br />
 
         <button type="button" onclick="addStudentForm()" id="buttonAddStudent">
@@ -52,20 +52,33 @@
 
     <div id="listStudents">
       <h1>List Students</h1>
+      <div>
+        <label for="order">Order by:</label>
+        <select id="optionSelect" onchange="sortBy()">
+          <option value="None" selected>--Select option--</option>
+          <option value="Student ID DESC">Student ID</option>
+          <option value="Student ID ASC">Student ID</option>
+          <option value="Name">Name</option>
+          <option value="Last Name">Last Name</option>
+          <option value="Score">Score</option>
+        </select>
+      </div>
+              
+      <br><br>
       <table id="tableStudents">
         <thead>
           <tr>
-            <th>Id</th>
-            <th>StudentId</th>
+            <th>ID</th>
+            <th>Student ID</th>
             <th>Name</th>
-            <th>LastName</th>
+            <th>Last Name</th>
             <th>Score</th>
           </tr>
         </thead>
         <tbody id="bodyTableStudents"></tbody>
       </table>
       <br /><br />
-      <label for="studentId">Id:</label>
+      <label for="studentId">ID:</label>
       <input
         type="number"
         name="studentId"
