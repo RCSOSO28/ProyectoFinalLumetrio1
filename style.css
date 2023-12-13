@@ -31,3 +31,7 @@ td {
 #buttonUpdateStudent {
   display: none;
 }
+
+#averageScore {
+  text-align: right;
+}

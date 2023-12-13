@@ -20,18 +20,79 @@ function listStudents() {
   document.getElementById("listStudents").style.display = "block";
   document.getElementById("form").style.display = "none";
   renderDataInTable(students);
+  calcularMedia(students);
 }
 
 function renderDataInTable(students) {
-  let sortedStudents = {};
-  if (document.getElementById("optionSelect").value === "Student ID DESC") {
-    sortedStudents = students.sort(
-      (student1, student2) => (student1.studentId < student2.studentId) ? 1 : (student1.studentId > student2.studentId) ? -1 : 0);
-      data(sortedStudents);
-  } else if (document.getElementById("optionSelect").value === "Student ID ASC"){
-    sortedStudents = students.sort(
-      (student1, student2) => (student1.studentId < student2.studentId) ? -1 : (student1.studentId > student2.studentId) ? 1 : 0);
-      data(sortedStudents);
+  if (document.getElementById("optionSelect").value === "Student ID ↓") {
+    students.sort((student1, student2) =>
+      student1.studentId < student2.studentId
+        ? 1
+        : student1.studentId > student2.studentId
+        ? -1
+        : 0
+    );
+    data(students);
+  } else if (document.getElementById("optionSelect").value === "Student ID ↑") {
+    students.sort((student1, student2) =>
+      student1.studentId < student2.studentId
+        ? -1
+        : student1.studentId > student2.studentId
+        ? 1
+        : 0
+    );
+    data(students);
+  } else if (document.getElementById("optionSelect").value === "Name ↓") {
+    students.sort((student1, student2) =>
+      student1.name < student2.name ? 1 : student1.name > student2.name ? -1 : 0
+    );
+    data(students);
+  } else if (document.getElementById("optionSelect").value === "Name ↑") {
+    students.sort((student1, student2) =>
+      student1.name < student2.name ? -1 : student1.name > student2.name ? 1 : 0
+    );
+    data(students);
+  } else if (document.getElementById("optionSelect").value === "Last Name ↓") {
+    students.sort((student1, student2) =>
+      student1.lastName < student2.lastName
+        ? 1
+        : student1.lastName > student2.lastName
+        ? -1
+        : 0
+    );
+    data(students);
+  } else if (document.getElementById("optionSelect").value === "Last Name ↑") {
+    students.sort((student1, student2) =>
+      student1.lastName < student2.lastName
+        ? -1
+        : student1.lastName > student2.lastName
+        ? 1
+        : 0
+    );
+    data(students);
+  } else if (document.getElementById("optionSelect").value === "Score ↓") {
+    students.sort((student1, student2) =>
+      student1.score < student2.score
+        ? 1
+        : student1.score > student2.score
+        ? -1
+        : 0
+    );
+    data(students);
+  } else if (document.getElementById("optionSelect").value === "Score ↑") {
+    students.sort((student1, student2) =>
+      student1.score < student2.score
+        ? -1
+        : student1.score > student2.score
+        ? 1
+        : 0
+    );
+    data(students);
+  } else {
+    students.sort((student1, student2) =>
+      student1.id < student2.id ? -1 : student1.score > student2.score ? 1 : 0
+    );
+    data(students);
   }
 }
 
@@ -67,7 +128,7 @@ function closeAddStudent() {
 function closeListStudents() {
   document.getElementById("form").style.display = "none";
   document.getElementById("studentIdUpdate").value = "";
-  document.getElementById("optionOrder");
+  document.getElementById("optionSelect").value = "None";
 }
 function addStudentForm() {
   validacionAux = validarData();
@@ -156,10 +217,10 @@ function sortBy() {
   renderDataInTable(students);
 }
 
-function data(sortedStudents){
+function data(students) {
   let mytable = document.getElementById("bodyTableStudents");
   mytable.innerHTML = "";
-  sortedStudents.forEach((student) => {
+  students.forEach((student) => {
     let newRow = document.createElement("tr");
     Object.values(student).forEach((value) => {
       let cell = document.createElement("td");
@@ -168,4 +229,18 @@ function data(sortedStudents){
     });
     mytable.appendChild(newRow);
   });
+}
+
+function calcularMedia(students) {
+  let media = 0;
+  let labelAverage = document.getElementById("averageScore");
+  students.forEach((student) => {
+    media += Number(student.score);
+  });
+  if (students.length === 0)
+  {
+    labelAverage.innerHTML = "Average Score: " + 0;
+  }else{
+    labelAverage.innerHTML = "Average Score: " + (media/students.length).toFixed(3);
+  }
 }

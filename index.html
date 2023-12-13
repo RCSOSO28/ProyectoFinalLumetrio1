@@ -56,15 +56,18 @@
         <label for="order">Order by:</label>
         <select id="optionSelect" onchange="sortBy()">
           <option value="None" selected>--Select option--</option>
-          <option value="Student ID DESC">Student ID</option>
-          <option value="Student ID ASC">Student ID</option>
-          <option value="Name">Name</option>
-          <option value="Last Name">Last Name</option>
-          <option value="Score">Score</option>
+          <option value="Student ID ↓">Student ID ↓</option>
+          <option value="Student ID ↑">Student ID ↑</option>
+          <option value="Name ↓">Name ↓</option>
+          <option value="Name ↑">Name ↑</option>
+          <option value="Last Name ↓">Last Name ↓</option>
+          <option value="Last Name ↑">Last Name ↑</option>
+          <option value="Score ↓">Score ↓</option>
+          <option value="Score ↑">Score ↑</option>
         </select>
+        <p id="averageScore"></label>
       </div>
-              
-      <br><br>
+      <br>
       <table id="tableStudents">
         <thead>
           <tr>
